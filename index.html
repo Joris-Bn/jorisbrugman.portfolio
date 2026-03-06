@@ -1,108 +1,178 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Joris Brugman | Portfolio</title>
 
 <style>
 
 body{
+    margin:0;
     font-family: Arial, Helvetica, sans-serif;
-    margin:0;
-    background:#f5f5f5;
-    color:#222;
-}
-
-header{
-    background:#111;
+    background:linear-gradient(180deg,#0f172a,#111827);
     color:white;
-    padding:40px;
-}
-
-header h1{
-    margin:0;
 }
 
 .container{
-    max-width:1000px;
+    max-width:1100px;
     margin:auto;
     padding:40px 20px;
 }
 
+header{
+    padding:80px 20px;
+    text-align:center;
+}
+
+header h1{
+    font-size:48px;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:18px;
+    color:#cbd5f5;
+}
+
+.github-button{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 22px;
+    background:#3b82f6;
+    color:white;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.github-button:hover{
+    background:#2563eb;
+}
+
+section{
+    margin-top:60px;
+}
+
 h2{
-    margin-top:50px;
+    font-size:28px;
+    margin-bottom:25px;
+    border-left:4px solid #3b82f6;
+    padding-left:10px;
+}
+
+.about{
+    background:#1f2937;
+    padding:30px;
+    border-radius:10px;
+}
+
+.projects{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
 }
 
 .project{
-    background:white;
+    background:#1f2937;
     padding:25px;
-    margin-bottom:30px;
-    border-radius:8px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.project:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
 .project h3{
     margin-top:0;
+    color:#60a5fa;
 }
 
 .tags{
-    margin-top:10px;
+    margin-top:15px;
 }
 
 .tag{
     display:inline-block;
-    background:#eee;
-    padding:5px 10px;
-    border-radius:5px;
-    margin-right:5px;
-    font-size:14px;
+    background:#374151;
+    padding:6px 10px;
+    margin:4px;
+    border-radius:6px;
+    font-size:13px;
+}
+
+.skills{
+    background:#1f2937;
+    padding:25px;
+    border-radius:10px;
+}
+
+.skills span{
+    display:inline-block;
+    background:#374151;
+    padding:8px 14px;
+    margin:6px;
+    border-radius:6px;
 }
 
 footer{
-    text-align:center;
+    margin-top:80px;
     padding:30px;
-    color:#777;
+    text-align:center;
+    color:#9ca3af;
 }
 
 a{
-    color:#0077cc;
-    text-decoration:none;
-}
-
-a:hover{
-    text-decoration:underline;
+    color:#60a5fa;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
+
 <h1>Joris Brugman</h1>
-<p>Applied Data Science & AI Student | Python • Java • SQL • Backend Development</p>
+
+<p>
+Applied Data Science & AI Student  
+Python • Java • SQL • Backend Development
+</p>
+
+<a class="github-button" href="https://github.com/YOURUSERNAME">
+View My GitHub
+</a>
+
 </header>
 
 <div class="container">
 
 <section>
+
 <h2>About Me</h2>
 
+<div class="about">
+
 <p>
-Hi, I’m Joris Brugman, a 21-year-old second-year Applied Data Science & AI student based in Maastricht, Netherlands.  
+Hi, I’m Joris Brugman, a 21-year-old second-year Applied Data Science & AI student based in Maastricht, Netherlands.
 I enjoy building practical software and working on data-driven projects.
 </p>
 
 <p>
-My main skills include Python, Java, SQL, SQLite, GUI design, and backend development.  
-I like creating clean, simple systems that are easy to use while still solving complex problems behind the scenes.
+My main skills include Python, Java, SQL, SQLite, GUI design, and backend development.
+I like creating clean and simple systems that are easy for users to work with while solving complex problems behind the scenes.
 </p>
 
 <p>
-This portfolio shows some projects I worked on during my studies that involve databases, software engineering, and artificial intelligence.
+Many of the projects shown here can be explored in more detail on my GitHub where the full code and documentation are available.
 </p>
+
+</div>
 
 </section>
 
@@ -111,30 +181,26 @@ This portfolio shows some projects I worked on during my studies that involve da
 
 <h2>Projects</h2>
 
+<div class="projects">
 
 <div class="project">
 
 <h3>Medical Data Engineering System</h3>
 
 <p>
-This 9-week group project focused on designing a data engineering pipeline for medical data.  
-The goal was to extract, store, process, and load medical datasets into a single structured system that could be used by healthcare professionals.
+A 9-week group project where we designed a medical data platform that allows doctors to quickly access patient information through a web dashboard.
 </p>
 
 <p>
-We built a centralized database and a web interface that allows doctors to easily search patient records without needing to write SQL queries.  
-Users can search by name or date of birth and access premade queries for things like current medications or treatments.
-</p>
-
-<p>
-A big design decision was making the system simple for non-technical users. Doctors are not going to write database queries, so we built a dashboard with predefined searches and safeguards to prevent accidental database changes.
+The system merges multiple datasets into a single database and provides predefined queries so medical professionals can retrieve information without writing SQL.
+Users can search records using names or date of birth and easily view medications, treatments, and other patient information.
 </p>
 
 <div class="tags">
 <span class="tag">SQL</span>
 <span class="tag">Database Design</span>
 <span class="tag">Backend</span>
-<span class="tag">Web Interface</span>
+<span class="tag">Web Dashboard</span>
 <span class="tag">Data Engineering</span>
 </div>
 
@@ -143,20 +209,14 @@ A big design decision was making the system simple for non-technical users. Doct
 
 <div class="project">
 
-<h3>Software Engineering: Patient Exercise System</h3>
+<h3>Patient Exercise System</h3>
 
 <p>
-This project focused on creating a prototype system where patients could complete exercises while doctors monitor their progress.  
-The system was designed to be fun and motivating, especially for younger users.
+A software engineering project focused on creating a system where doctors can track patient exercise progress while patients interact with a fun interface.
 </p>
 
 <p>
-The application was written in Java and included a command-line interface with ASCII art to make it more engaging.  
-Patients could interact with virtual pets, gain levels, and unlock accessories while completing exercises assigned by doctors.
-</p>
-
-<p>
-I worked on coding and developing the admin panel while also helping with the database structure and account management system.
+The project was written in Java and used a command-line interface with ASCII art. Patients could level up virtual pets and unlock accessories as motivation for completing exercises.
 </p>
 
 <div class="tags">
@@ -174,23 +234,21 @@ I worked on coding and developing the admin panel while also helping with the da
 <h3>Evolutionary AI Optimization</h3>
 
 <p>
-This individual assignment explored evolutionary algorithms to optimize mathematical problems.  
-The goal was to apply biological concepts like mutation, selection, and survival of the fittest to improve solutions over many generations.
+An individual assignment exploring evolutionary algorithms to solve optimization problems.
 </p>
 
 <p>
-The system was used for tasks such as minimizing functions, solving a job sequencing problem, and generating mathematical formulas that best fit given data points.
-</p>
-
-<p>
-The project produced graphs showing the improvement of solutions across generations and demonstrated how parameter tuning and selection strategies significantly influence performance.
+Using mutation, selection, and survival-of-the-fittest strategies, the algorithm improves solutions across generations.
+It was used for tasks such as minimizing functions and generating mathematical formulas that best match given datasets.
 </p>
 
 <div class="tags">
 <span class="tag">Python</span>
-<span class="tag">Evolutionary Algorithms</span>
+<span class="tag">Evolutionary AI</span>
 <span class="tag">Optimization</span>
 <span class="tag">Data Visualization</span>
+</div>
+
 </div>
 
 </div>
@@ -202,29 +260,47 @@ The project produced graphs showing the improvement of solutions across generati
 
 <h2>Skills</h2>
 
-<p>
-Python • Java • SQL • SQLite • Backend Development • Database Design • Data Processing • GUI Design
-</p>
+<div class="skills">
+
+<span>Python</span>
+<span>Java</span>
+<span>SQL</span>
+<span>SQLite</span>
+<span>Backend Development</span>
+<span>Database Design</span>
+<span>Data Processing</span>
+<span>GUI Design</span>
+
+</div>
 
 </section>
 
 
 <section>
 
-<h2>Links</h2>
+<h2>GitHub</h2>
 
 <p>
-GitHub: <a href="https://github.com/">github.com</a>
+All of the projects shown here — including the full code and documentation — can be found on my GitHub profile.
+</p>
+
+<p>
+<a href="https://github.com/YOURUSERNAME">
+github.com/YOURUSERNAME
+</a>
 </p>
 
 </section>
 
-
 </div>
 
 <footer>
+
 © 2026 Joris Brugman
+
 </footer>
 
 </body>
 </html>
+```
+
