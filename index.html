@@ -1,305 +1,941 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joris Brugman — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<title>Joris Brugman | Portfolio</title>
+    :root {
+      --bg:       #0c0c0b;
+      --surface:  #141413;
+      --border:   #252522;
+      --text:     #ede9e2;
+      --muted:    #6a6760;
+      --accent:   #d4a843;
+      --accent2:  #4a7c6f;
+      --mono:     'IBM Plex Mono', monospace;
+      --serif:    'Instrument Serif', serif;
+      --sans:     'Syne', sans-serif;
+    }
 
-<style>
+    html { scroll-behavior: smooth; }
 
-body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:linear-gradient(180deg,#0f172a,#111827);
-    color:white;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:40px 20px;
-}
+    /* Grid overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-header{
-    padding:80px 20px;
-    text-align:center;
-}
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(12,12,11,0.88);
+      backdrop-filter: blur(12px);
+    }
 
-header h1{
-    font-size:48px;
-    margin-bottom:10px;
-}
+    .nav-logo {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+    }
 
-header p{
-    font-size:18px;
-    color:#cbd5f5;
-}
+    .nav-logo span { color: var(--accent); }
 
-.github-button{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 22px;
-    background:#3b82f6;
-    color:white;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:bold;
-}
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
 
-.github-button:hover{
-    background:#2563eb;
-}
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
 
-section{
-    margin-top:60px;
-}
+    .nav-links a:hover { color: var(--text); }
 
-h2{
-    font-size:28px;
-    margin-bottom:25px;
-    border-left:4px solid #3b82f6;
-    padding-left:10px;
-}
+    /* ── HERO ────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      overflow: hidden;
+    }
 
-.about{
-    background:#1f2937;
-    padding:30px;
-    border-radius:10px;
-}
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
 
-.projects{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:25px;
-}
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(56px, 9vw, 120px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.35s forwards;
+    }
 
-.project{
-    background:#1f2937;
-    padding:25px;
-    border-radius:10px;
-    transition:0.3s;
-}
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
 
-.project:hover{
-    transform:translateY(-5px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.4);
-}
+    .hero-sub {
+      margin-top: 32px;
+      max-width: 520px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.55s forwards;
+    }
 
-.project h3{
-    margin-top:0;
-    color:#60a5fa;
-}
+    .hero-meta {
+      position: absolute;
+      top: 50%;
+      right: 48px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: right;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.9s forwards;
+    }
 
-.tags{
-    margin-top:15px;
-}
+    .hero-meta span {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
 
-.tag{
-    display:inline-block;
-    background:#374151;
-    padding:6px 10px;
-    margin:4px;
-    border-radius:6px;
-    font-size:13px;
-}
+    .hero-meta span strong {
+      color: var(--text);
+      font-weight: 500;
+    }
 
-.skills{
-    background:#1f2937;
-    padding:25px;
-    border-radius:10px;
-}
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      right: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s forwards;
+    }
 
-.skills span{
-    display:inline-block;
-    background:#374151;
-    padding:8px 14px;
-    margin:6px;
-    border-radius:6px;
-}
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+      position: relative;
+      overflow: hidden;
+    }
 
-footer{
-    margin-top:80px;
-    padding:30px;
-    text-align:center;
-    color:#9ca3af;
-}
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: var(--accent);
+      animation: slide 2s ease-in-out 1.5s infinite;
+    }
 
-a{
-    color:#60a5fa;
-}
+    /* big background text */
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 48px;
+      transform: translateY(-50%);
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: clamp(120px, 22vw, 300px);
+      color: rgba(255,255,255,0.022);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
 
-</style>
+    /* ── SECTION WRAPPER ─────────────────────── */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 48px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 52px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-label .num {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* ── ABOUT ───────────────────────────────── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-heading {
+      font-family: var(--serif);
+      font-size: clamp(36px, 5vw, 60px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .about-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .about-text {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+      margin-top: 12px;
+    }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* Skills */
+    .skills-group h4 {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      padding: 5px 12px;
+      letter-spacing: 0.06em;
+      transition: border-color 0.2s, color 0.2s;
+      cursor: default;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Info rows */
+    .info-rows { display: flex; flex-direction: column; gap: 0; }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .info-row .label {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .info-row .value { color: var(--text); }
+
+    /* ── PROJECTS ────────────────────────────── */
+    #projects .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .project-card:hover { border-color: var(--accent); }
+
+    .project-header {
+      display: grid;
+      grid-template-columns: 60px 1fr auto auto;
+      align-items: center;
+      gap: 24px;
+      padding: 28px 32px;
+      transition: background 0.2s;
+    }
+
+    .project-card:hover .project-header {
+      background: rgba(212,168,67,0.04);
+    }
+
+    .project-number {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .project-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: 24px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .project-type {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-badge {
+      font-size: 10px;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .project-toggle {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 18px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .project-card.open .project-toggle {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .project-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-card.open .project-body { max-height: 600px; }
+
+    .project-body-inner {
+      padding: 0 32px 36px 116px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px 48px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      margin-top: 0;
+    }
+
+    .detail-block h5 {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .detail-block p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .detail-block.full { grid-column: 1 / -1; }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .tech-chip {
+      background: rgba(212,168,67,0.08);
+      color: var(--accent);
+      font-size: 10px;
+      padding: 3px 10px;
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(212,168,67,0.2);
+    }
+
+    /* ── CONTACT ─────────────────────────────── */
+    #contact {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .contact-heading {
+      font-family: var(--serif);
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+      background: var(--surface);
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      background: rgba(212,168,67,0.04);
+      color: var(--accent);
+    }
+
+    .contact-link .arrow {
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+
+    .contact-link:hover .arrow { transform: translateX(4px) translateY(-4px); }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── DIVIDER LINE ────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── ANIMATIONS ──────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes slide {
+      0%   { left: -100%; }
+      50%  { left: 0%; }
+      100% { left: 100%; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 20px; }
+
+      #hero { padding: 0 24px 60px; }
+      .hero-meta { display: none; }
+
+      .section { padding: 72px 24px; }
+
+      #about .about-grid,
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+
+      .project-header {
+        grid-template-columns: 40px 1fr auto;
+        gap: 14px;
+        padding: 20px;
+      }
+
+      .project-badge { display: none; }
+
+      .project-body-inner {
+        padding: 20px;
+        grid-template-columns: 1fr;
+      }
+
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">JB<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<h1>Joris Brugman</h1>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-text">DATA</div>
+    <p class="hero-tag">Portfolio — Applied Data Science & AI</p>
+    <h1 class="hero-name">Joris<br /><em>Brugman</em></h1>
+    <p class="hero-sub">
+      Building practical software and data-driven solutions. Based in Maastricht, Netherlands.
+      Second-year student, first-rate curiosity.
+    </p>
+    <div class="hero-meta">
+      <span>Location — <strong>Maastricht, NL</strong></span>
+      <span>Status — <strong>Available for opportunities</strong></span>
+      <span>Languages — <strong>Dutch / English</strong></span>
+      <span>Age — <strong>21</strong></span>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </section>
 
-<p>
-Applied Data Science & AI Student  
-Python • Java • SQL • Backend Development
-</p>
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="section-label">
+      <span class="num">01</span>
+      About me
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <h2 class="about-heading">Building things<br />that <em>actually work</em></h2>
+        <p class="about-text">
+          I'm a second-year Applied Data Science & AI student who enjoys creating clean,
+          efficient solutions — whether that's a database system, a command-line tool,
+          or an AI optimizer. I care about usability and making technical systems
+          accessible to non-technical users.
+        </p>
+        <p class="about-text" style="margin-top:16px;">
+          I like sleek, purposeful interfaces. No unnecessary complexity.
+          Just what's needed to get the job done well.
+        </p>
+      </div>
+      <div class="about-right reveal" style="transition-delay: 0.15s;">
+        <div class="skills-group">
+          <h4>Technical Skills</h4>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Java</span>
+            <span class="tag">SQL</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">Database Design</span>
+            <span class="tag">GUI Development</span>
+            <span class="tag">Backend Dev</span>
+            <span class="tag">Evolutionary AI</span>
+            <span class="tag">Data Engineering</span>
+          </div>
+        </div>
+        <div class="info-rows">
+          <div class="info-row">
+            <span class="label">Degree</span>
+            <span class="value">Applied Data Science & AI</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Year</span>
+            <span class="value">Second Year</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Location</span>
+            <span class="value">Maastricht, Netherlands</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Languages</span>
+            <span class="value">Dutch, English</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Focus</span>
+            <span class="value">Practical, user-centred solutions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<a class="github-button" href="https://github.com/YOURUSERNAME">
-View My GitHub
-</a>
+  <div class="divider"></div>
 
-</header>
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="section-label">
+      <span class="num">02</span>
+      Selected Projects
+    </div>
 
-<div class="container">
+    <div class="projects-list">
 
-<section>
+      <!-- Project 1 -->
+      <div class="project-card reveal" onclick="toggleProject(this)">
+        <div class="project-header">
+          <span class="project-number">01</span>
+          <div class="project-title-wrap">
+            <span class="project-title">Medical Records Database</span>
+            <span class="project-type">Data Engineering</span>
+          </div>
+          <span class="project-badge">Group · 9 weeks</span>
+          <div class="project-toggle">+</div>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="detail-block">
+              <h5>Overview</h5>
+              <p>
+                Designed and built a unified database system for medical professionals to access
+                patient records. Merged multiple datasets into a single source of truth and
+                built a web dashboard on top of it.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>Users & Purpose</h5>
+              <p>
+                Targeting doctors and GPs — non-technical users. Built-in pre-made queries
+                (current medications, active treatments) and search by name or date of birth
+                so no raw SQL was ever needed.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>My Contributions</h5>
+              <p>
+                Merged the datasets, designed the query layer, built the interactive website
+                and dashboard, and implemented login/session security with full user interaction logging.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>Key Design Decision</h5>
+              <p>
+                Consolidated all data into one database for fast, flexible access. Added
+                input sanitisation guards to prevent accidental destructive SQL commands
+                — because a doctor really shouldn't be able to wipe the database.
+              </p>
+            </div>
+            <div class="detail-block full">
+              <h5>Tech Stack</h5>
+              <div class="tech-stack">
+                <span class="tech-chip">SQL</span>
+                <span class="tech-chip">SQLite</span>
+                <span class="tech-chip">Python</span>
+                <span class="tech-chip">Web Dashboard</span>
+                <span class="tech-chip">User Auth</span>
+                <span class="tech-chip">Data Merging</span>
+                <span class="tech-chip">Logging</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<h2>About Me</h2>
+      <!-- Project 2 -->
+      <div class="project-card reveal" style="transition-delay:0.1s;" onclick="toggleProject(this)">
+        <div class="project-header">
+          <span class="project-number">02</span>
+          <div class="project-title-wrap">
+            <span class="project-title">Rehab Exercise Tracker</span>
+            <span class="project-type">Software Engineering</span>
+          </div>
+          <span class="project-badge">Group · 9 weeks</span>
+          <div class="project-toggle">+</div>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="detail-block">
+              <h5>Overview</h5>
+              <p>
+                A Java CLI application designed to gamify physiotherapy exercises for young patients,
+                while giving doctors a separate admin panel to track patient progress.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>Users & Purpose</h5>
+              <p>
+                Built for children doing rehabilitation exercises and the doctors monitoring them.
+                Motivation mechanics: ASCII art pets, accessories, and level-up rewards — all in the terminal.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>My Contributions</h5>
+              <p>
+                Coded core functionality and built the admin panel. Handled task reallocation
+                when a non-coding team member dropped out — redistributing work to keep
+                the project on track.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>Standout Detail</h5>
+              <p>
+                Terminal colour customisation for the ASCII pets — a tiny change that
+                transformed the feel from a dry CLI tool into something genuinely
+                engaging for kids.
+              </p>
+            </div>
+            <div class="detail-block full">
+              <h5>Tech Stack</h5>
+              <div class="tech-stack">
+                <span class="tech-chip">Java</span>
+                <span class="tech-chip">Database</span>
+                <span class="tech-chip">CLI / ASCII</span>
+                <span class="tech-chip">Account Management</span>
+                <span class="tech-chip">Admin Panel</span>
+                <span class="tech-chip">GitHub</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div class="about">
+      <!-- Project 3 -->
+      <div class="project-card reveal" style="transition-delay:0.2s;" onclick="toggleProject(this)">
+        <div class="project-header">
+          <span class="project-number">03</span>
+          <div class="project-title-wrap">
+            <span class="project-title">Evolutionary AI Optimizer</span>
+            <span class="project-type">Evolutionary AI</span>
+          </div>
+          <span class="project-badge">Solo · Assignment</span>
+          <div class="project-toggle">+</div>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="detail-block">
+              <h5>Overview</h5>
+              <p>
+                Implemented and optimised AI systems using biological evolution principles —
+                applying them to function minimisation, a job sequencing problem,
+                and symbolic regression from data points.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>Approach</h5>
+              <p>
+                Built a custom survival-of-the-fittest selection function from scratch.
+                Tuned parameters and selection mechanisms carefully — learning that the
+                right algorithm configuration matters as much as the code itself.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>Results</h5>
+              <p>
+                Achieved strong optimisation outcomes, visualised via before/after convergence
+                graphs showing the training trajectory. High performance especially on the
+                function optimisation task.
+              </p>
+            </div>
+            <div class="detail-block">
+              <h5>Key Insight</h5>
+              <p>
+                Correct parameter selection and evolutionary mechanisms are just as
+                impactful as implementation quality — a lesson that applies well beyond AI.
+              </p>
+            </div>
+            <div class="detail-block full">
+              <h5>Tech Stack</h5>
+              <div class="tech-stack">
+                <span class="tech-chip">Python</span>
+                <span class="tech-chip">Evolutionary AI</span>
+                <span class="tech-chip">Function Optimisation</span>
+                <span class="tech-chip">Job Scheduling</span>
+                <span class="tech-chip">Symbolic Regression</span>
+                <span class="tech-chip">Data Visualisation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<p>
-Hi, I’m Joris Brugman, a 21-year-old second-year Applied Data Science & AI student based in Maastricht, Netherlands.
-I enjoy building practical software and working on data-driven projects.
-</p>
+    </div>
+  </section>
 
-<p>
-My main skills include Python, Java, SQL, SQLite, GUI design, and backend development.
-I like creating clean and simple systems that are easy for users to work with while solving complex problems behind the scenes.
-</p>
+  <div class="divider"></div>
 
-<p>
-Many of the projects shown here can be explored in more detail on my GitHub where the full code and documentation are available.
-</p>
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="section-label">
+      <span class="num">03</span>
+      Get in touch
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <h2 class="contact-heading">Let's<br /><em>connect</em></h2>
+        <p style="color:var(--muted); font-size:14px; line-height:1.8; margin-top:20px;">
+          Open to internships, collaborations, and interesting projects.
+          Feel free to reach out via GitHub or email.
+        </p>
+      </div>
+      <div class="contact-links reveal" style="transition-delay:0.15s;">
+        <a class="contact-link" href="https://github.com/jorisbrugman" target="_blank" rel="noopener">
+          <span>GitHub</span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact-link" href="mailto:joris.brugman@example.com">
+          <span>Email</span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/jorisbrugman" target="_blank" rel="noopener">
+          <span>LinkedIn</span>
+          <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-</div>
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Joris Brugman</span>
+    <span>Applied Data Science & AI · Maastricht</span>
+    <span>Built with HTML, CSS & JS</span>
+  </footer>
 
-</section>
+  <script>
+    // Project accordion
+    function toggleProject(card) {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.project-card.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    }
 
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-<section>
-
-<h2>Projects</h2>
-
-<div class="projects">
-
-<div class="project">
-
-<h3>Medical Data Engineering System</h3>
-
-<p>
-A 9-week group project where we designed a medical data platform that allows doctors to quickly access patient information through a web dashboard.
-</p>
-
-<p>
-The system merges multiple datasets into a single database and provides predefined queries so medical professionals can retrieve information without writing SQL.
-Users can search records using names or date of birth and easily view medications, treatments, and other patient information.
-</p>
-
-<div class="tags">
-<span class="tag">SQL</span>
-<span class="tag">Database Design</span>
-<span class="tag">Backend</span>
-<span class="tag">Web Dashboard</span>
-<span class="tag">Data Engineering</span>
-</div>
-
-</div>
-
-
-<div class="project">
-
-<h3>Patient Exercise System</h3>
-
-<p>
-A software engineering project focused on creating a system where doctors can track patient exercise progress while patients interact with a fun interface.
-</p>
-
-<p>
-The project was written in Java and used a command-line interface with ASCII art. Patients could level up virtual pets and unlock accessories as motivation for completing exercises.
-</p>
-
-<div class="tags">
-<span class="tag">Java</span>
-<span class="tag">Database</span>
-<span class="tag">CLI</span>
-<span class="tag">Software Engineering</span>
-</div>
-
-</div>
-
-
-<div class="project">
-
-<h3>Evolutionary AI Optimization</h3>
-
-<p>
-An individual assignment exploring evolutionary algorithms to solve optimization problems.
-</p>
-
-<p>
-Using mutation, selection, and survival-of-the-fittest strategies, the algorithm improves solutions across generations.
-It was used for tasks such as minimizing functions and generating mathematical formulas that best match given datasets.
-</p>
-
-<div class="tags">
-<span class="tag">Python</span>
-<span class="tag">Evolutionary AI</span>
-<span class="tag">Optimization</span>
-<span class="tag">Data Visualization</span>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section>
-
-<h2>Skills</h2>
-
-<div class="skills">
-
-<span>Python</span>
-<span>Java</span>
-<span>SQL</span>
-<span>SQLite</span>
-<span>Backend Development</span>
-<span>Database Design</span>
-<span>Data Processing</span>
-<span>GUI Design</span>
-
-</div>
-
-</section>
-
-
-<section>
-
-<h2>GitHub</h2>
-
-<p>
-All of the projects shown here — including the full code and documentation — can be found on my GitHub profile.
-</p>
-
-<p>
-<a href="https://github.com/Joris-Bn">
-github.com/YOURUSERNAME
-</a>
-</p>
-
-</section>
-
-</div>
-
-<footer>
-
-© 2026 Joris Brugman
-
-</footer>
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
-```
-
